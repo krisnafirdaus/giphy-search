@@ -22,7 +22,7 @@ function App() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  });
 
   const handleSubmit = (e) => {
     if (text.length === 0) {
