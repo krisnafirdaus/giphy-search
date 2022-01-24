@@ -1,5 +1,4 @@
 import TextList from "./components/TextList";
-import PictAwal from "./components/PictAwal";
 import Error from "./components/Error";
 import { GiphyFetch } from "@giphy/js-fetch-api";
 import { useState, useEffect } from "react";
@@ -8,7 +7,7 @@ import "./App.css";
 const giphy = new GiphyFetch(process.env.REACT_APP_GIPHY_KEY);
 
 function App() {
-  const [text, setText] = useState("");
+  const [text, setText] = useState("contoh");
   const [results, setResults] = useState([]);
   const [err, setErr] = useState(false);
 
@@ -17,7 +16,7 @@ function App() {
   };
 
   async function fetchData() {
-    let res = await giphy.animate({ limit: 9, offset: 25 });
+    let res = await giphy.animate(text, { limit: 9, offset: 25 });
     setResults(res.data);
   }
 
@@ -43,11 +42,9 @@ function App() {
     setErr(false);
   };
 
-  console.log(results);
-
   return (
     <div className="App">
-      <div className="">
+      <div className="container mx-auto">
         <h1 className="mt-10">GIPHY API</h1>
 
         <div>
@@ -59,7 +56,8 @@ function App() {
               </div>{" "}
               <input
                 type="text"
-                className="border-2 h-14 xs:w-32 md:w-96 pl-10 pr-20 rounded-lg z-0 focus:shadow focus:outline-none"
+                value={text}
+                className="border-2 h-14 xs:w-28 md:w-96 pl-10 pr-20 rounded-lg z-0 focus:shadow focus:outline-none"
                 placeholder="Search anything..."
                 onChange={handleInput}
               />
@@ -76,11 +74,7 @@ function App() {
           </div>
         </div>
         <Error isError={err} text="Masukkan Minimal 1 Huruf !!!" />
-        {results > 0 ? (
-          <TextList gifs={results} />
-        ) : (
-          <PictAwal gifs={results} />
-        )}
+        <TextList gifs={results} />
       </div>
     </div>
   );
