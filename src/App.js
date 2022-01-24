@@ -37,8 +37,6 @@ function App() {
     };
 
     apiCall();
-    //change error state back to false
-    setText("");
     setErr(false);
   };
 
